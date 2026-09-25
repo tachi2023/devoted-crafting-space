@@ -14,16 +14,205 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          read: boolean
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          read?: boolean
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          read?: boolean
+          subject?: string
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          file_name: string | null
+          id: string
+          kind: string
+          published: boolean
+          storage_path: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          file_name?: string | null
+          id?: string
+          kind: string
+          published?: boolean
+          storage_path?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          file_name?: string | null
+          id?: string
+          kind?: string
+          published?: boolean
+          storage_path?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_settings: {
+        Row: {
+          bio: string
+          email: string
+          full_name: string
+          github_url: string
+          id: string
+          linkedin_url: string
+          location: string
+          phones: string[]
+          professional_title: string
+          tagline: string
+          updated_at: string
+        }
+        Insert: {
+          bio?: string
+          email?: string
+          full_name?: string
+          github_url?: string
+          id?: string
+          linkedin_url?: string
+          location?: string
+          phones?: string[]
+          professional_title?: string
+          tagline?: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string
+          email?: string
+          full_name?: string
+          github_url?: string
+          id?: string
+          linkedin_url?: string
+          location?: string
+          phones?: string[]
+          professional_title?: string
+          tagline?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          demo_url: string | null
+          featured: boolean
+          features: string[]
+          github_url: string | null
+          id: string
+          image_key: string | null
+          problem: string
+          published: boolean
+          role: string
+          slug: string
+          solution: string
+          sort_order: number
+          status: string
+          summary: string
+          technologies: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          demo_url?: string | null
+          featured?: boolean
+          features?: string[]
+          github_url?: string | null
+          id?: string
+          image_key?: string | null
+          problem?: string
+          published?: boolean
+          role?: string
+          slug: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          summary: string
+          technologies?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          demo_url?: string | null
+          featured?: boolean
+          features?: string[]
+          github_url?: string | null
+          id?: string
+          image_key?: string | null
+          problem?: string
+          published?: boolean
+          role?: string
+          slug?: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          summary?: string
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_portfolio_admin: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +339,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
