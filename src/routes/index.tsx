@@ -1,24 +1,45 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowDown, ArrowUpRight, BriefcaseBusiness, Code2, Download, Github, GraduationCap, Linkedin, Mail, MapPin, MoonStar, Phone, Sparkles } from "lucide-react";
+import { SiteHeader } from "@/components/site-header";
+import { ContactForm } from "@/components/contact-form";
+import { Button } from "@/components/ui/button";
+import { fallbackProjects, projectImages, skills } from "@/lib/portfolio-data";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: [
+    { title: "TAMNO NGUEMTIO IVANA LESLINE | Développeuse Web & Mobile" },
+    { name: "description", content: "Portfolio d’Ivana Tamno, développeuse Web & Mobile à Douala : Flutter, Spring Boot, PostgreSQL, UX/UI et conception produit." },
+    { property: "og:title", content: "Ivana Tamno | Développeuse Web & Mobile" },
+    { property: "og:description", content: "Des idées métier transformées en produits numériques utiles, modernes et évolutifs." },
+    { property: "og:type", content: "website" }, { property: "og:url", content: "/" }, { name: "twitter:card", content: "summary_large_image" },
+  ], links: [{ rel: "canonical", href: "/" }] }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const process = [["01","Comprendre","Analyser le besoin et le problème métier."],["02","Concevoir","Transformer le besoin en solution et en expérience utilisateur."],["03","Développer","Construire le produit avec une architecture propre."],["04","Tester","Éprouver les cas nominaux et les cas limites."],["05","Améliorer","Observer les usages réels et faire évoluer le produit."]];
+
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  return <div className="portfolio"><SiteHeader/><main>
+    <section className="hero" id="accueil"><div className="stars" aria-hidden="true"/><div className="moon-scene" aria-hidden="true"><span className="moon-orbit"/><span className="moon-disc"/></div><div className="shell hero-content">
+      <p className="eyebrow"><Sparkles/> Disponible pour des opportunités</p>
+      <h1><span>TAMNO NGUEMTIO</span> IVANA LESLINE</h1><p className="hero-role">Développeuse Web <i>&</i> Mobile</p>
+      <p className="hero-copy">Je transforme les idées et les besoins métier en expériences digitales <strong>utiles, modernes et évolutives.</strong></p>
+      <div className="hero-cta"><Button asChild size="lg"><a href="#projets">Voir mes projets <ArrowDown/></a></Button><Button variant="outline" size="lg" disabled><Download/> CV bientôt disponible</Button></div>
+      <div className="hero-meta"><span><MapPin/> Douala, Cameroun</span><span><GraduationCap/> Licence 3 Génie Logiciel</span></div>
+    </div><div className="scroll-cue" aria-hidden="true">Explorer <ArrowDown/></div></section>
+
+    <section className="section about" id="a-propos"><div className="shell about-grid"><div><p className="section-number">01 — À propos</p><h2>Penser le produit.<br/><em>Construire la solution.</em></h2></div><div className="about-copy"><p>Je suis étudiante en Licence 3 Génie Logiciel à l’Institut Universitaire du Golfe de Guinée et développeuse d’applications mobiles et web.</p><p>Spécialisée en Flutter/Dart, je pratique également l’architecture logicielle, le backend avec Spring Boot et PostgreSQL, ainsi que la conception UX/UI.</p><p>J’aborde chaque projet de bout en bout : compréhension du besoin, cahier des charges, conception, développement, tests et amélioration.</p><div className="discipline-row"><span>Mobile</span><span>Web</span><span>Backend</span><span>Produit</span></div></div></div></section>
+
+    <section className="section expertise" id="competences"><div className="shell"><p className="section-number">02 — Expertise</p><div className="section-heading"><h2>Une pratique technique,<br/><em>une vision produit.</em></h2><p>Des technologies choisies pour répondre au contexte réel, sans effets de mode ni faux pourcentages.</p></div><div className="skills-grid">{skills.map((group, i)=><article className="skill-block" key={group.title}><div className="skill-icon">{i === 0 ? <MoonStar/> : i === 1 ? <Code2/> : i === 2 ? <BriefcaseBusiness/> : <Sparkles/>}</div><h3>{group.title}</h3><div className="skill-list">{group.items.map(item=><span key={item}>{item}</span>)}</div></article>)}</div></div></section>
+
+    <section className="section projects" id="projets"><div className="shell"><p className="section-number">03 — Réalisations</p><div className="section-heading"><h2>Des projets ancrés<br/><em>dans des besoins réels.</em></h2><p>Chaque réalisation part d’un problème concret et se construit autour de l’usage.</p></div><div className="projects-list">{fallbackProjects.map((p,i)=><article className={`project-row ${i===0 ? "featured" : ""}`} key={p.slug}><div className="project-visual"><img src={projectImages[p.image_key || ""]} alt={`Illustration conceptuelle du projet ${p.title}`} loading="lazy" width={1408} height={912}/><small>Illustration conceptuelle</small></div><div className="project-info"><div className="project-index">0{i+1} {p.featured && <span>Projet majeur</span>}</div><h3>{p.title}</h3><p>{p.summary}</p><div className="tag-row">{p.technologies.map(t=><span key={t}>{t}</span>)}</div><p className="status">{p.status}</p><Button variant="outline" asChild><Link to="/projets/$slug" params={{slug:p.slug}}>Voir l’étude <ArrowUpRight/></Link></Button></div></article>)}</div></div></section>
+
+    <section className="section method"><div className="shell"><p className="section-number">04 — Mon processus</p><h2>De l’intuition au produit,<br/><em>sans perdre le besoin de vue.</em></h2><div className="process-grid">{process.map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
+
+    <section className="section journey"><div className="shell journey-grid"><div><p className="section-number">05 — Formation</p><h2>Un parcours en<br/><em>construction continue.</em></h2><div className="timeline"><article><time>2025—2026</time><div><h3>Licence 3 Génie Logiciel</h3><p>Institut Universitaire du Golfe de Guinée, Douala · En cours</p></div></article><article><time>2024—2025</time><div><h3>BTS en Génie Logiciel</h3><p>Institut Universitaire du Golfe de Guinée, Douala</p></div></article></div></div><aside className="languages"><h3>Langues</h3><div><strong>Français</strong><span>Langue maternelle</span></div><div><strong>Anglais</strong><span>Niveau intermédiaire — en perfectionnement</span></div></aside></div></section>
+
+    <section className="section documents" id="documents"><div className="shell"><p className="section-number">06 — Documents</p><div className="section-heading"><h2>Documents<br/><em>professionnels.</em></h2><p>Les versions officielles seront disponibles ici dès leur publication.</p></div><div className="document-grid"><article><span>PDF · À venir</span><h3>Curriculum Vitae</h3><p>Parcours, compétences et informations professionnelles.</p><Button disabled><Download/> Bientôt disponible</Button></article><article><span>PDF · À venir</span><h3>Lettre de motivation</h3><p>Présentation de mon approche et de mes motivations.</p><Button disabled><Download/> Bientôt disponible</Button></article></div></div></section>
+
+    <section className="section contact" id="contact"><div className="shell contact-grid"><div><p className="section-number">07 — Contact</p><h2>Construisons quelque<br/><em>chose d’utile ensemble.</em></h2><p>Un projet, une opportunité ou une idée à explorer ? Échangeons.</p><div className="contact-links"><a href="mailto:ivanatamno@gmail.com"><Mail/> ivanatamno@gmail.com</a><a href="tel:+237680272200"><Phone/> +237 6 80 27 22 00</a><a href="tel:+237655772942"><Phone/> +237 6 55 77 29 42</a><a href="https://github.com/tahi2023" target="_blank" rel="noreferrer"><Github/> github.com/tahi2023</a><a href="https://linkedin.com/in/tahi2023" target="_blank" rel="noreferrer"><Linkedin/> linkedin.com/in/tahi2023</a></div></div><ContactForm/></div></section>
+  </main><footer><div className="shell footer-inner"><div><strong>TAMNO NGUEMTIO IVANA LESLINE</strong><span>Développeuse Web & Mobile</span></div><p>© 2026 · Conçu avec rigueur à Douala.</p><Link to="/auth">Administration</Link></div></footer></div>;
 }
