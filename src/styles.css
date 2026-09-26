@@ -190,7 +190,6 @@ body { font-family: "Manrope", system-ui, sans-serif; -webkit-font-smoothing: an
 h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.05; }
 h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
 h2 em, h1 i, .hero-role i { font-style: italic; color: var(--primary); font-weight: 500; }
-a { color: inherit; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 .shell { width: min(1180px, 100% - 2.5rem); margin-inline: auto; }
 .eyebrow, .section-number { display: inline-flex; align-items: center; gap: .5rem; font-size: .75rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--primary); margin-bottom: 1.2rem; }
