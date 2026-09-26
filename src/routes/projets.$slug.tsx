@@ -1,0 +1,18 @@
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
+import { fallbackProjects, projectImages } from "@/lib/portfolio-data";
+import type { Project } from "@/lib/portfolio-data";
+import { supabase } from "@/integrations/supabase/client";
+
+export const Route = createFileRoute("/projets/$slug")({
+  loader: async ({ params }) => {
+    const { data } = await supabase.from("projects").select("*").eq("slug", params.slug).eq("published", true).maybeSingle();
+    const project = (data as Project | null) || fallbackProjects.find((item) => item.slug === params.slug);
+    if (!project) throw notFound();
+    return project;
+  },
+  head: ({ loaderData, params }) => ({ meta: [{ title: `${loaderData.title} | Projet d’Ivana Tamno` }, { name:"description", content:loaderData.summary }, { property:"og:title",content:`${loaderData.title} | Ivana Tamno` }, { property:"og:description",content:loaderData.summary }, { property:"og:type",content:"article" }, { property:"og:url",content:`/projets/${params.slug}` }, { name:"twitter:card",content:"summary_large_image" }], links:[{rel:"canonical",href:`/projets/${params.slug}`}] }), component: ProjectPage,
+});
+function ProjectPage(){ const p=Route.useLoaderData(); return <div className="portfolio"><SiteHeader/><main className="project-page"><div className="shell"><Button asChild variant="ghost"><Link to="/"><ArrowLeft/> Retour aux projets</Link></Button><header className="project-hero"><div><p className="eyebrow">Étude de projet · {p.status}</p><h1>{p.title}</h1><p>{p.summary}</p><div className="tag-row">{p.technologies.map(t=><span key={t}>{t}</span>)}</div></div><figure><img src={projectImages[p.image_key || ""]} alt={`Illustration conceptuelle de ${p.title}`} width={1408} height={912}/><figcaption>Illustration conceptuelle — les captures réelles pourront être ajoutées depuis l’administration.</figcaption></figure></header><section className="case-grid"><article><span>Le problème</span><h2>Comprendre le contexte</h2><p>{p.problem}</p></article><article><span>La réponse</span><h2>Concevoir pour l’usage</h2><p>{p.solution}</p></article></section><section className="feature-section"><div><p className="section-number">Fonctionnalités</p><h2>Le produit en détail.</h2></div><div className="feature-list">{p.features.map(f=><p key={f}><CheckCircle2/>{f}</p>)}</div></section><section className="role-band"><span>Mon rôle</span><h2>{p.role}</h2><Button asChild><a href="mailto:ivanatamno@gmail.com">Parler de votre projet <ArrowUpRight/></a></Button></section></div></main></div>}
