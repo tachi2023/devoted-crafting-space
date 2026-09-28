@@ -44,8 +44,8 @@ CREATE TABLE public.portfolio_settings (
   location text NOT NULL DEFAULT 'Douala, Cameroun',
   email text NOT NULL DEFAULT 'ivanatamno@gmail.com',
   phones text[] NOT NULL DEFAULT ARRAY['6 80 27 22 00','6 55 77 29 42'],
-  github_url text NOT NULL DEFAULT 'https://github.com/tahi2023',
-  linkedin_url text NOT NULL DEFAULT 'https://linkedin.com/in/tahi2023',
+  github_url text NOT NULL DEFAULT 'https://github.com/tachi2023',
+  linkedin_url text NOT NULL DEFAULT 'https://linkedin.com/in/tachi2023',
   tagline text NOT NULL DEFAULT 'Je transforme les idées et les besoins métier en expériences digitales utiles, modernes et évolutives.',
   bio text NOT NULL DEFAULT 'Étudiante en Licence 3 Génie Logiciel à l’Institut Universitaire du Golfe de Guinée et développeuse d’applications mobiles et web, spécialisée en Flutter/Dart, architecture logicielle, Spring Boot et PostgreSQL.',
   updated_at timestamptz NOT NULL DEFAULT now()
